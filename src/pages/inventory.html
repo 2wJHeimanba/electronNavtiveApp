@@ -8,29 +8,39 @@
     <style>
         .single-row{
             display: flex;
-
+            transition: all 0.1s linear;
+        }
+        .single-row:hover{
+            background-color: rgba(0,0,0,0.08);
+            border-radius: 2px;
         }
         .single-row>div:nth-child(1){
             max-width: 50px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
         }
         .single-row>div:nth-child(1)>input{
             text-align: center;
         }
         .single-item{
             display: inline-flex;
-            justify-content: center;
             align-items: center;
-            margin: 4px 1px;
-        }
-        .item-input{
-            width: 100%;
-            height: 100%;
+            margin: 1px 1px;
+            padding: 2px;
+            border: 1px solid #ccc;
+            border-radius: 2px;
+            flex: 1 1;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
-    <input type="text" id="demo">
-    <div id="inventory">库存管理</div>
+    <div id="operator">
+        <button id="save">保存数据</button>
+    </div>
+    <div id="inventory"></div>
+    <script src="../js/select.js"></script>
     <script src="../js/inventory.js"></script>
 </body>
 </html>
