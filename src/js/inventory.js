@@ -2,10 +2,11 @@ const path = require("path")
 const tool = require("child_process");
 
 class Inventory{
-    constructor({el,data,eachBox}=params){
+    constructor({el,data,eachBox,addBtnText}=params){
         this.el = document.querySelector(el);
         this.eachBox = eachBox;
         this.data = data;
+        this.addBtnText = addBtnText||"新增数据项"
         this.initHandler();
     }
     // 初始化
@@ -19,17 +20,38 @@ class Inventory{
     createDomHandler(item,bool=true){
         let son = document.createElement("div");
         son.className = "single-item"
-        bool&&son.setAttribute("contenteditable","true");
+        if(!bool) son.style.backgroundColor = "rgba(0,0,0,0.1)" ;
+        son.setAttribute("contenteditable",bool);
         son.setAttribute("column",item.column);
         son.setAttribute("row",item.row);
         son.setAttribute("note",item.note);
         "amount" in item && son.setAttribute("amount",item.amount);
         if(item.note=="单位"){
-            son.style.cssText = `max-width:60px;`
-        }else if(["入库","出库","库存","日期","收款金额"].includes(item.note)){
-            son.style.cssText = `max-width:100px;`
+            son.style.maxWidth = `60px`;
+            son.style.position = "relative";
+            son.innerText = item.data;
+            son.addEventListener("focusin",(e)=>{
+                createSelect({el:e.target,select:["瓶","件"]})
+            },false);
+            son.addEventListener("focusout",(e)=>{
+                e.target.childNodes[1]&&e.target.removeChild(e.target.childNodes[1]);
+            },false)            
+        }else if(item.note=="日期"){
+            son.style.maxWidth = `100px`;
+            son.style.position = "relative";
+            son.innerText = item.data;
+            son.addEventListener("focusin",()=>{
+                new DatePicker({el:son});
+            },false);
+            son.addEventListener("focusout",(e)=>{
+                e.target.childNodes[1]&&e.target.removeChild(e.target.childNodes[1]);
+            },false);
+        }else if(["入库","出库","库存","收款金额","领取人"].includes(item.note)){
+            son.style.maxWidth = `100px`;
+            son.innerText = item.data;
+        }else{
+            son.innerText = item.data;
         }
-        son.innerText = item.data;
         return son
     }
 
@@ -44,22 +66,23 @@ class Inventory{
     // 创建新增按钮
     createBtnHandler(){
         let btnBox = document.createElement("div");
-        btnBox.style.cssText = `
-            margin-top:5px;
-            text-align:right;
-        `
+        btnBox.className = "add-row-btn-box"
         let btn = document.createElement("button");
-        btn.innerText = "新增一行数据";
-        btn.style.cssText = `
-            cursor:pointer;
-        `
+        btn.className = "add-row-btn"
+        btn.innerText = this.addBtnText;
         btn.addEventListener("click",()=>{
             let temporaryArr = JSON.parse(JSON.stringify(this.data[this.data.length-1]));
             temporaryArr = temporaryArr.map((item,index)=>{
-                item.data = index===0? Number.parseInt(item.data) + 1:""
                 item.row = item.row + 1;
                 if(item.note=="单位"){
                     item.data = "瓶"
+                }else if(item.note=="日期"){
+                    let temporaryDate = new Date();
+                    item.data = `${temporaryDate.getFullYear()}-${String(temporaryDate.getMonth()+1).padStart(2,"0")}-${String(temporaryDate.getDate()).padStart(2,"0")}`
+                }else if(index===0){
+                    item.data = Number.parseInt(item.data)
+                }else{
+                    item.data = ""
                 }
                 return item
             });
@@ -117,7 +140,7 @@ class Inventory{
 
     // 当前修改元素的父节点，上一条数据的库存
     changeInventoryHandler(parentDom,previouInventory){
-        let unit = this.findDomHandler(parentDom,"单位"),
+        let unit = this.findDomHandler(parentDom,"单位").firstChild,
             push = this.findDomHandler(parentDom,"入库"),
             pull = this.findDomHandler(parentDom,"出库"),
             inventory = this.findDomHandler(parentDom,"库存");
@@ -170,6 +193,7 @@ class Inventory{
             el:"#inventory",
             data:temporaryArr,
             eachBox:eachBox,
+            addBtnText:"新增一行数据"
         });
 
         document.getElementById("save").addEventListener("click",function(){

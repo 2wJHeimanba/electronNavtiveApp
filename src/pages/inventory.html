@@ -6,6 +6,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>库存管理</title>
     <style>
+        *{
+            box-sizing: border-box;
+        }
+        body::-webkit-scrollbar {
+            /*滚动条整体样式*/
+            width : 10px;  /*高宽分别对应横竖滚动条的尺寸*/
+            height: 1px;
+        }
+        body::-webkit-scrollbar-thumb {
+            /*滚动条里面小方块*/
+            border-radius   : 10px;
+            background-color: #ccc;
+            background-image: -webkit-linear-gradient(
+                45deg,
+                rgba(255, 255, 255, 0.2) 25%,
+                transparent 25%,
+                transparent 50%,
+                rgba(255, 255, 255, 0.2) 50%,
+                rgba(255, 255, 255, 0.2) 75%,
+                transparent 75%,
+                transparent
+            );
+        }
+        body::-webkit-scrollbar-track {
+            /*滚动条里面轨道*/
+            box-shadow   : inset 0 0 5px rgba(0, 0, 0, 0.2);
+            background   : #ededed;
+            /* border-radius: 10px; */
+        }
         .single-row{
             display: flex;
             transition: all 0.1s linear;
@@ -27,11 +56,28 @@
             display: inline-flex;
             align-items: center;
             margin: 1px 1px;
-            padding: 2px;
+            padding: 5px 8px;
             border: 1px solid #ccc;
             border-radius: 2px;
             flex: 1 1;
             font-size: 14px;
+        }
+        .add-row-btn-box{
+            margin: 15px 0;
+            text-align:right;
+        }
+        .add-row-btn{
+            background-color: 	#08a8a8;
+            border: none;
+            outline: none;
+            padding: 5px 15px;
+            border-radius: 3px;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.2s linear;
+        }
+        .add-row-btn:hover{
+            background-color: #057777;
         }
     </style>
 </head>
@@ -41,6 +87,7 @@
     </div>
     <div id="inventory"></div>
     <script src="../js/select.js"></script>
+    <script src="../js/datePicker.js"></script>
     <script src="../js/inventory.js"></script>
 </body>
 </html>
