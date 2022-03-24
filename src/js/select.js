@@ -27,7 +27,8 @@ const createSelect = function({el,select}=params){
             e.target.style.backgroundColor = "initial"
         });
         tempraryDom.addEventListener("click",()=>{
-            el.firstChild.textContent = item
+            el.firstChild.textContent = item;
+            el.blur();
         },false)
         box.appendChild(tempraryDom)
     })
