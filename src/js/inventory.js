@@ -80,7 +80,7 @@ class Inventory{
                     let temporaryDate = new Date();
                     item.data = `${temporaryDate.getFullYear()}-${String(temporaryDate.getMonth()+1).padStart(2,"0")}-${String(temporaryDate.getDate()).padStart(2,"0")}`
                 }else if(index===0){
-                    item.data = Number.parseInt(item.data)
+                    item.data = Number.parseInt(item.data) + 1
                 }else{
                     item.data = ""
                 }
