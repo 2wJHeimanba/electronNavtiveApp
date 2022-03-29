@@ -127,6 +127,7 @@ class DatePicker{
             display: grid;
             grid-template-columns: repeat(7,1fr);
             grid-template-rows:repeat(6,1fr);
+            box-shadow:0 0 8px rgba(0,0,0,0.37);
         `;
         const { year,month } = transformDateHandler(date)
         let firstDay=new Date(year,month,1);
