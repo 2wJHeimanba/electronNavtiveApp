@@ -9,7 +9,7 @@ import (
 
 func main() {
 
-	f, err := excelize.OpenFile("D:\\self\\Go\\go-project\\src\\go_code\\excelize\\test.xlsx")
+	f, err := excelize.OpenFile("/Users/2wj/Desktop/studio/electronNavtiveApp/src/excelize/test.xlsx")
 	if err != nil {
 		fmt.Println("打开文件失败")
 		return

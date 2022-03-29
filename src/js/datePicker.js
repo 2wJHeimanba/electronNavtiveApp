@@ -91,6 +91,7 @@ class DatePicker{
         let weekDom = document.createElement("div");
         weekDom.style.cssText = `
             display:flex;
+            background-color:#fff;
         `;
         weeks.forEach(item=>{
             let temporaryDom = document.createElement("span");
@@ -100,10 +101,10 @@ class DatePicker{
                 display:inline-flex;
                 justify-content:center;
                 align-items:center;
-                font-weight:600;
                 padding:3px 0;
-                background-color:#ccc;
+                background-color: rgba(0,0,0,0.08);
                 user-select: none;
+                font-size: 12px;
             `;
             temporaryDom.textContent = item;
             weekDom.appendChild(temporaryDom)

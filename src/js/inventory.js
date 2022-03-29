@@ -37,7 +37,7 @@ class Inventory{
                 e.target.childNodes[1]&&e.target.removeChild(e.target.childNodes[1]);
             },false)            
         }else if(item.note=="日期"){
-            son.style.maxWidth = `100px`;
+            son.style.maxWidth = `110px`;
             son.style.position = "relative";
             son.innerText = item.data;
             son.addEventListener("focusin",()=>{
@@ -169,7 +169,7 @@ class Inventory{
 
 ;(function(){
     // tool.exec("cd src/tools && main.exe",function(err,res){
-    tool.exec(path.join(__dirname,"../tools/main.exe"),function(err,res){
+    tool.exec(path.join(__dirname,"../tools/main"),function(err,res){
         if(err){
             console.log("获取数据失败",err)
             return
@@ -197,7 +197,25 @@ class Inventory{
         });
 
         document.getElementById("save").addEventListener("click",function(){
-            console.log(document.getElementById("inventory"))
+            let box = document.getElementById("inventory");
+            box = Array.from(box.childNodes);
+            let result = [];
+            box.forEach(item=>{
+                let temporaryArr = [];
+                let temporaryBox = Array.from(item.childNodes);
+                temporaryBox.forEach(val=>{
+                    let temporaryObj = {};
+                    temporaryObj.row = val.getAttribute("row");
+                    temporaryObj.column = val.getAttribute("column");
+                    temporaryObj.data = val.textContent;
+                    temporaryObj.note = val.getAttribute("note");
+                    temporaryArr.push(temporaryObj)
+                });
+                result.push(temporaryArr);
+            });
+            console.log(result)
+            
+
         });
     })
 })()
