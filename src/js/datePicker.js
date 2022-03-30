@@ -142,21 +142,26 @@ class DatePicker{
                 display:inline-flex;
                 justify-content:center;
                 align-items:center;
-                
             `;
             const { month:temporaryMonth } = transformDateHandler(item);//当前月份
             // 鼠标进入
             temporarySpan.addEventListener("mouseenter",(e)=>{
+                let temporaryStyleDom = e.target.style;
                 if(month==temporaryMonth){//当月的
-                    e.target.style.cssText = e.target.style.cssText + "background-color:#08a8a8;border-radius:5px;color:#fff;cursor:pointer;"
+                    temporaryStyleDom.setProperty("background-color","#08a8a8");
+                    temporaryStyleDom.setProperty("border-radius","5px");
+                    temporaryStyleDom.setProperty("color","#fff");
+                    temporaryStyleDom.setProperty("cursor","pointer");
                 }else{
-                    e.target.style.cssText = e.target.style.cssText + "cursor:not-allowed;"
+                    temporaryStyleDom.setProperty("cursor","not-allowed")
                 }
             },false);
             // 鼠标离开
             temporarySpan.addEventListener("mouseleave",(e)=>{
                 if(month==temporaryMonth){
-                    e.target.style.cssText = e.target.style.cssText + "background-color: initial;color:initial;"
+                    let temporaryStyleDom = e.target.style;
+                    temporaryStyleDom.setProperty("background-color","initial");
+                    temporaryStyleDom.setProperty("color","initial");
                 }
             },false);
             // 点击
